@@ -55,6 +55,6 @@ async function getData(URL, data) {
 	if !(res.ok) {
 		alert('Ошибка загрузки')
 	};
-	return res.json();
+	return await res.json();
 };
 getData().then( res => console.log(res)).catch( e => {throw new Error(`e.message`)})
