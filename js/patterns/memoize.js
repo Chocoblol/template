@@ -1,59 +1,20 @@
 'use strict';
-// одиночное использование функции
-const once = (fn) => (...args) => {
-	if (!fn) return;
-	let res = fn(...args);
-	fn = null;
-	return res;
-};
 
-// лимитированное использование функции
-const limit = (count, fn) => {
-	let counter = 0;
+// пример мемоизации
+
+// генерация ключей для поиска
+const argKey = arg =>  arg.toString() + ':' + typeof arg;
+const generateKey = args => args.map(argKey).join('|');
+
+// пример мемоизации
+const memo = fn => {
+	let cache = {};
 	return (...args) => {
-		if (counter === count) {
-			return;
-		};
-		counter++;
-		fn(...args);
+		let key = generateKey(...args);
+		let val = cache[key];
+		if (val) return val;
+		let res = fn(...args);
+		cache[key] = res;
+		return res;
 	};
-};
-
-// обнуление функции
-const canceleble = fn => {
-	const wrapper = (...args) => {
-		if (fn) return fn(...args);
-	};
-	wrapper.cancel = () => fn = null;
-	return wrapper;
-};
-
-// универсальная обетка
-const wrap = fn => {
-	let limit = 0;
-	let counter = 0;
-
-	const wrapper = (...args) => {
-		if (limit && counter === limit) return wrapper.cancel();
-		if (fn) {
-			let res = fn(...args);
-			counter++;
-			return res;
-		};
-	};
-	wrapper.cancel = () => {
-		fn = null;
-		return wrapper;
-	};
-	wrapper.timeout = msec => {
-		setTimeout(() => {
-			wrapper.cancel();
-		}, msec);
-		return wrapper;
-	};
-	wrapper.limit = clount => {
-		limit = count;
-		return wrapper;
-	};
-	return wrapper;
 };
