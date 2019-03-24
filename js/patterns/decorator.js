@@ -75,3 +75,5 @@ Mage.prototype = {
 	};
 };
 
+const p1 = new Mage(new Player({name:'dd', type:'firemage'}),150);
+p1.greet();
