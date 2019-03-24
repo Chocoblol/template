@@ -51,3 +51,27 @@ obj3.get();
 console.log('___________________', obj3);
 obj4.get();
 console.log('___________________', obj4);
+
+
+// еще пример декоратора
+
+const Player = (config) => {
+	this.name = config.name;
+	this.type = config.type; 
+}; 
+Player.prototype.greet = function() {
+	console.log(`Hello, my name is ${this.name} and i'm a ${this.type}`);
+};
+
+const Mage = (obj, param) => {
+	this._obj = obj;
+	this.param = param;
+};
+Mage.prototype = {
+	constructor: Mage,
+	greet: () => {
+		this._obj.greet();
+		console.log(`I have a ${this.param} health`)
+	};
+};
+
