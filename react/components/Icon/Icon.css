@@ -1,0 +1,7 @@
+.disabled:hover {
+  cursor: crosshair;
+}
+
+.func:hover {
+  cursor: pointer;
+}

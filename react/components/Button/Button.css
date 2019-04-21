@@ -1,0 +1,14 @@
+.btn {
+  cursor: pointer;
+  width:100px;
+  height:30px;
+  font-size: 12px;
+}
+
+.btn:focus {
+  border: 1px solid black;
+}
+
+.active {
+
+}
